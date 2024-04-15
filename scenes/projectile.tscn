@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bujiug2k2v0g4"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_acht4"]
+[ext_resource type="Material" uid="uid://botb8cmq74soh" path="res://res/player_color.tres" id="2_n851x"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_10xo2"]
+material = ExtResource("2_n851x")
+size = Vector3(0.075, 0.075, 0.075)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_42yrf"]
+size = Vector3(0.15, 0.15, 0.15)
+
+[node name="Projectile" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_acht4")
+metadata/is_projectile = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_10xo2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_42yrf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

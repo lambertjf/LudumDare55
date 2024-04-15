@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3 uid="uid://c83myhg33vj1w"]
+
+[ext_resource type="Script" path="res://scripts/start.gd" id="1_6rlvx"]
+[ext_resource type="FontFile" uid="uid://c60bpi75r8on1" path="res://assets/spellbook.ttf" id="1_fixvt"]
+
+[node name="Start" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6rlvx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+color = Color(0, 0.34902, 0.34902, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 37.0
+offset_right = 214.0
+offset_bottom = 60.0
+scale = Vector2(2.09433, 2.17047)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_fixvt")
+theme_override_font_sizes/font_size = 80
+text = "SORCERER'S STEPS"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 537.0
+offset_top = 534.0
+offset_right = 612.0
+offset_bottom = 729.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 457.0
+offset_right = 747.0
+offset_bottom = 734.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 798.0
+offset_top = 389.0
+offset_right = 873.0
+offset_bottom = 742.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 943.0
+offset_top = 295.0
+offset_right = 1188.0
+offset_bottom = 688.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 1106.0
+offset_top = 182.0
+offset_right = 1174.0
+offset_bottom = 315.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect7" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 1106.0
+offset_top = 211.0
+offset_right = 1124.0
+offset_bottom = 295.0
+color = Color(0.380392, 0.192157, 0.533333, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 195.0
+offset_right = 629.0
+offset_bottom = 551.0
+theme_override_fonts/normal_font = ExtResource("1_fixvt")
+theme_override_font_sizes/normal_font_size = 35
+text = "Controls:
+WASD to move
+Mouse to look
+Left Click to shoot
+Right Click to summon a platform
+Shift-Esc to quit
+
+Reach the portal by placing platforms before getting pushed off by enemies! Shoot enemies to destroy them.
+Tip: You can gain elevation by placing a platform mid-jump."
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 720.0
+offset_top = 165.0
+offset_right = 1076.0
+offset_bottom = 521.0
+theme_override_fonts/normal_font = ExtResource("1_fixvt")
+theme_override_font_sizes/normal_font_size = 35
+text = "Created by lamb bones"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 561.0
+offset_right = 436.0
+offset_bottom = 620.0
+theme_override_fonts/normal_font = ExtResource("1_fixvt")
+theme_override_font_sizes/normal_font_size = 60
+text = "Press Space to start"
