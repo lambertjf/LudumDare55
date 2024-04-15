@@ -1,0 +1,157 @@
+[gd_scene load_steps=20 format=3 uid="uid://dcl3dfjsw6igs"]
+
+[ext_resource type="PackedScene" uid="uid://j8m0bkr5hd45" path="res://exit.tscn" id="1_ml3rm"]
+[ext_resource type="Script" path="res://win_screen.gd" id="1_unav1"]
+[ext_resource type="Shader" path="res://lava.gdshader" id="2_u77ig"]
+[ext_resource type="Material" uid="uid://br7aqmk6kbdrr" path="res://platform.tres" id="3_g3w7r"]
+[ext_resource type="FontFile" uid="uid://dhhoot3qb75xu" path="res://spellbook.ttf" id="5_dogni"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jhud8"]
+noise_type = 0
+seed = 275
+frequency = 0.052
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kqlph"]
+noise = SubResource("FastNoiseLite_jhud8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i3lb0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bu0hq"]
+seamless = true
+noise = SubResource("FastNoiseLite_i3lb0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lahh0"]
+render_priority = 0
+shader = ExtResource("2_u77ig")
+shader_parameter/low_color = Color(0.192157, 0.0627451, 0.0784314, 1)
+shader_parameter/high_color = Color(0.454902, 0, 0.00784314, 1)
+shader_parameter/scroll_speed = Vector2(0.005, 0.005)
+shader_parameter/scroll_speed_2 = Vector2(-0.01, 0)
+shader_parameter/height_scale = 1.695
+shader_parameter/light_mod = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_kqlph")
+shader_parameter/noise_two = SubResource("NoiseTexture2D_bu0hq")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3lhdx"]
+material = SubResource("ShaderMaterial_lahh0")
+size = Vector2(2000, 2000)
+subdivide_width = 500
+subdivide_depth = 500
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkngj"]
+albedo_color = Color(0.282353, 0, 0.0156863, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_d5ydi"]
+material = SubResource("StandardMaterial3D_bkngj")
+size = Vector2(500, 500)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ns7ws"]
+size = Vector3(500, 41.7496, 500)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv1up"]
+sky_top_color = Color(0.72549, 0.145098, 0.643137, 1)
+sky_horizon_color = Color(0.984314, 0.470588, 0.517647, 1)
+sky_curve = 0.0315336
+ground_bottom_color = Color(0.352941, 0, 0.0784314, 1)
+ground_horizon_color = Color(0.556863, 0, 0.0784314, 1)
+
+[sub_resource type="Sky" id="Sky_0vtiw"]
+sky_material = SubResource("ProceduralSkyMaterial_vv1up")
+
+[sub_resource type="Environment" id="Environment_0soau"]
+background_mode = 2
+background_color = Color(0.984314, 0.415686, 0.407843, 1)
+sky = SubResource("Sky_0vtiw")
+fog_light_color = Color(0.960784, 0.184314, 0.243137, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4f4fh"]
+data = PackedVector3Array(-2.5, 200, 2.5, 2.5, 200, 2.5, -2.5, -200, 2.5, 2.5, 200, 2.5, 2.5, -200, 2.5, -2.5, -200, 2.5, 2.5, 200, -2.5, -2.5, 200, -2.5, 2.5, -200, -2.5, -2.5, 200, -2.5, -2.5, -200, -2.5, 2.5, -200, -2.5, 2.5, 200, 2.5, 2.5, 200, -2.5, 2.5, -200, 2.5, 2.5, 200, -2.5, 2.5, -200, -2.5, 2.5, -200, 2.5, -2.5, 200, -2.5, -2.5, 200, 2.5, -2.5, -200, -2.5, -2.5, 200, 2.5, -2.5, -200, 2.5, -2.5, -200, -2.5, 2.5, 200, 2.5, -2.5, 200, 2.5, 2.5, 200, -2.5, -2.5, 200, 2.5, -2.5, 200, -2.5, 2.5, 200, -2.5, -2.5, -200, 2.5, 2.5, -200, 2.5, -2.5, -200, -2.5, 2.5, -200, 2.5, 2.5, -200, -2.5, -2.5, -200, -2.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l80dg"]
+size = Vector3(5, 400, 5)
+
+[node name="WinScreen" type="Node3D"]
+script = ExtResource("1_unav1")
+
+[node name="Exit" parent="." instance=ExtResource("1_ml3rm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.082046, 0, -4.3847)
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Waves" type="MeshInstance3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.0946, 0)
+mesh = SubResource("PlaneMesh_3lhdx")
+
+[node name="Bottom" type="MeshInstance3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 38.3965, 0)
+mesh = SubResource("PlaneMesh_d5ydi")
+
+[node name="HitBox" type="CollisionShape3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.8922, 0)
+shape = SubResource("BoxShape3D_ns7ws")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0soau")
+
+[node name="BaseLevelPlatform" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 2.1, 0, 1, 0, -1, 0, -9.17939e-08, 0.0108938, 0, -4.15741)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseLevelPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+shape = SubResource("ConcavePolygonShape3D_4f4fh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseLevelPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+material_override = ExtResource("3_g3w7r")
+mesh = SubResource("BoxMesh_l80dg")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.80899, 5.42851)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 17.2087, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 480.0
+offset_right = 713.0
+offset_bottom = 530.0
+theme_override_fonts/font = ExtResource("5_dogni")
+theme_override_font_sizes/font_size = 60
+text = "Completion Time:"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 72.0
+offset_right = 713.0
+offset_bottom = 167.0
+theme_override_fonts/font = ExtResource("5_dogni")
+theme_override_font_sizes/font_size = 115
+text = "Victory!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 544.0
+offset_right = 649.0
+offset_bottom = 586.0
+theme_override_fonts/font = ExtResource("5_dogni")
+theme_override_font_sizes/font_size = 50
+text = "00:00"
+horizontal_alignment = 1

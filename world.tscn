@@ -1,0 +1,370 @@
+[gd_scene load_steps=41 format=3 uid="uid://c7h62nr83l7a6"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_6bbck"]
+[ext_resource type="Script" path="res://Player.gd" id="1_y1iek"]
+[ext_resource type="Shader" path="res://ditherfilter.gdshader" id="2_eu3o4"]
+[ext_resource type="Script" path="res://ColorRect.gd" id="2_wcps5"]
+[ext_resource type="Texture2D" uid="uid://moi8ua8drbjx" path="res://assets/shootscaled.png" id="4_ijtt1"]
+[ext_resource type="FontFile" uid="uid://c60bpi75r8on1" path="res://assets/spellbook.ttf" id="4_mtib7"]
+[ext_resource type="Script" path="res://RightHand.gd" id="4_wbjlv"]
+[ext_resource type="Shader" path="res://lava.gdshader" id="5_f3dkq"]
+[ext_resource type="Material" uid="uid://botb8cmq74soh" path="res://player_color.tres" id="5_u6e3f"]
+[ext_resource type="Texture2D" uid="uid://c6l1wnqh156go" path="res://assets/3.png" id="6_foqb3"]
+[ext_resource type="Texture2D" uid="uid://cmyn2g0y1pplh" path="res://assets/idle1scaled.png" id="6_qkgle"]
+[ext_resource type="Script" path="res://LeftHand.gd" id="7_45own"]
+[ext_resource type="AudioStream" uid="uid://crhliiyrxr7jv" path="res://assets/shoot.ogg" id="9_ei2tr"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m3lmi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yipi"]
+shader = ExtResource("2_eu3o4")
+shader_parameter/quantize_size = 2.0
+shader_parameter/handle_scale = null
+shader_parameter/dither_enabled = false
+shader_parameter/bayer_pattern = 1.0
+shader_parameter/divisions = 4.0
+shader_parameter/contrast = 1.0
+shader_parameter/shift = 0.0
+shader_parameter/grayscale = false
+shader_parameter/use_palette = false
+shader_parameter/palette = SubResource("GradientTexture1D_m3lmi")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x3fhd"]
+sky_top_color = Color(0.72549, 0.145098, 0.643137, 1)
+sky_horizon_color = Color(0.984314, 0.470588, 0.517647, 1)
+sky_curve = 0.0315336
+ground_bottom_color = Color(0.352941, 0, 0.0784314, 1)
+ground_horizon_color = Color(0.556863, 0, 0.0784314, 1)
+
+[sub_resource type="Sky" id="Sky_4y5if"]
+sky_material = SubResource("ProceduralSkyMaterial_x3fhd")
+
+[sub_resource type="Environment" id="Environment_668iv"]
+background_mode = 2
+background_color = Color(0.984314, 0.415686, 0.407843, 1)
+sky = SubResource("Sky_4y5if")
+fog_light_color = Color(0.960784, 0.184314, 0.243137, 1)
+
+[sub_resource type="Curve" id="Curve_voe67"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4dxrg"]
+curve = SubResource("Curve_voe67")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hrtqa"]
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_4dxrg")
+
+[sub_resource type="BoxMesh" id="BoxMesh_cqowb"]
+material = ExtResource("5_u6e3f")
+size = Vector3(0.02, 0.02, 0.02)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kca4o"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7r17h"]
+radius = 30.0
+
+[sub_resource type="Animation" id="Animation_eglx2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-44, 134)]
+}
+
+[sub_resource type="Animation" id="Animation_6tk4m"]
+resource_name = "hold"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-44, 134), Vector2(-38, -90)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c8lty"]
+_data = {
+"RESET": SubResource("Animation_eglx2"),
+"raise": SubResource("Animation_6tk4m")
+}
+
+[sub_resource type="Curve" id="Curve_0hm74"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ptcd1"]
+curve = SubResource("Curve_0hm74")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cbxwy"]
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ptcd1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_we1xo"]
+material = ExtResource("5_u6e3f")
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xapke"]
+noise_type = 0
+seed = 275
+frequency = 0.052
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5vao3"]
+noise = SubResource("FastNoiseLite_xapke")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mcis8"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ayoek"]
+seamless = true
+noise = SubResource("FastNoiseLite_mcis8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1tej"]
+render_priority = 0
+shader = ExtResource("5_f3dkq")
+shader_parameter/low_color = Color(0.192157, 0.0627451, 0.0784314, 1)
+shader_parameter/high_color = Color(0.454902, 0, 0.00784314, 1)
+shader_parameter/scroll_speed = Vector2(0.005, 0.005)
+shader_parameter/scroll_speed_2 = Vector2(-0.01, 0)
+shader_parameter/height_scale = 1.695
+shader_parameter/light_mod = 0.1
+shader_parameter/noise = SubResource("NoiseTexture2D_5vao3")
+shader_parameter/noise_two = SubResource("NoiseTexture2D_ayoek")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q3h86"]
+material = SubResource("ShaderMaterial_f1tej")
+size = Vector2(2000, 2000)
+subdivide_width = 500
+subdivide_depth = 500
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0yyc"]
+albedo_color = Color(0.282353, 0, 0.0156863, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sh6tq"]
+material = SubResource("StandardMaterial3D_d0yyc")
+size = Vector2(500, 500)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rolbh"]
+size = Vector3(500, 41.7496, 500)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_6bbck")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Filter" type="ColorRect" parent="UI"]
+material = SubResource("ShaderMaterial_5yipi")
+layout_mode = 0
+offset_right = 1149.0
+offset_bottom = 648.0
+mouse_filter = 2
+script = ExtResource("2_wcps5")
+
+[node name="Death" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_right = 780.0
+offset_bottom = 449.0
+mouse_filter = 2
+color = Color(0.254902, 0.254902, 0.254902, 1)
+script = ExtResource("2_wcps5")
+
+[node name="Playtime" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 543.0
+offset_top = 532.0
+offset_right = 640.0
+offset_bottom = 595.0
+theme_override_fonts/font = ExtResource("4_mtib7")
+theme_override_font_sizes/font_size = 76
+text = "2:30"
+horizontal_alignment = 1
+
+[node name="LevelContainer" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_668iv")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+collision_layer = 85
+collision_mask = 85
+script = ExtResource("1_y1iek")
+jump_height = 2.0
+camera_sens = 3.0
+
+[node name="RecoveryTimer" type="Timer" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D"]
+target_position = Vector3(0, 0, -20)
+collision_mask = 8
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="EmitPoint" type="Node3D" parent="Player/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243051, -0.0851392, -0.437368)
+
+[node name="ShootEffect" type="GPUParticles3D" parent="Player/Camera3D/EmitPoint"]
+emitting = false
+amount = 10
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-3.92408, -4, -4, 7.84816, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_hrtqa")
+draw_pass_1 = SubResource("BoxMesh_cqowb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_kca4o")
+
+[node name="SummonArea" type="Area3D" parent="Player"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Player/SummonArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("CylinderShape3D_7r17h")
+
+[node name="RightHand" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 43.0
+offset_right = 40.0
+offset_bottom = 83.0
+mouse_filter = 2
+script = ExtResource("4_wbjlv")
+
+[node name="ShootTimer" type="Timer" parent="Player/RightHand"]
+one_shot = true
+
+[node name="ShootHand" type="TextureRect" parent="Player/RightHand"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_left = 735.0
+offset_top = 307.0
+offset_right = 1157.0
+offset_bottom = 871.0
+mouse_filter = 2
+texture = ExtResource("4_ijtt1")
+
+[node name="IdleHand" type="TextureRect" parent="Player/RightHand"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 741.0
+offset_top = 166.0
+offset_right = 1163.0
+offset_bottom = 730.0
+mouse_filter = 2
+texture = ExtResource("6_qkgle")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player/RightHand"]
+stream = ExtResource("9_ei2tr")
+volume_db = -10.0
+max_polyphony = 2
+
+[node name="LeftHand" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("7_45own")
+
+[node name="SummonHand" type="TextureRect" parent="Player/LeftHand"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -44.0
+offset_top = 134.0
+offset_right = 542.0
+offset_bottom = 917.0
+texture = ExtResource("6_foqb3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/LeftHand/SummonHand"]
+libraries = {
+"": SubResource("AnimationLibrary_c8lty")
+}
+
+[node name="CooldownTimer" type="Timer" parent="Player/LeftHand"]
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Player/LeftHand"]
+layout_mode = 0
+offset_left = 469.0
+offset_top = 602.0
+offset_right = 706.0
+offset_bottom = 629.0
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player"]
+
+[node name="FX" type="Node3D" parent="."]
+
+[node name="SummonCursor" type="GPUParticles3D" parent="FX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.35733, 0)
+emitting = false
+amount = 10
+lifetime = 0.2
+visibility_aabb = AABB(-3.92408, -4, -4, 7.84816, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_cbxwy")
+draw_pass_1 = SubResource("BoxMesh_we1xo")
+
+[node name="PlayerPlatforms" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10.9065, 0)
+
+[node name="DeathBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Waves" type="MeshInstance3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.0946, 0)
+mesh = SubResource("PlaneMesh_q3h86")
+
+[node name="Bottom" type="MeshInstance3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 38.3965, 0)
+mesh = SubResource("PlaneMesh_sh6tq")
+
+[node name="HitBox" type="CollisionShape3D" parent="DeathBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.8922, 0)
+shape = SubResource("BoxShape3D_rolbh")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Player/RecoveryTimer" to="Player" method="_on_recovery_timer_timeout"]
+[connection signal="timeout" from="Player/RightHand/ShootTimer" to="Player/RightHand" method="shoot_timer_done"]
+[connection signal="animation_finished" from="Player/LeftHand/SummonHand/AnimationPlayer" to="Player/LeftHand" method="_animation_finished"]
+[connection signal="timeout" from="Player/LeftHand/CooldownTimer" to="Player/LeftHand" method="_on_cooldown_timer_timeout"]
+[connection signal="body_entered" from="DeathBox" to="." method="_on_death_box_body_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

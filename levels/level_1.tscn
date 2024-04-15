@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2mst1qkry80x"]
+
+[ext_resource type="Script" path="res://Level.gd" id="1_5x3u5"]
+[ext_resource type="Material" uid="uid://br7aqmk6kbdrr" path="res://platform.tres" id="2_wlnxt"]
+[ext_resource type="PackedScene" uid="uid://j8m0bkr5hd45" path="res://exit.tscn" id="3_hkyhx"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0re5x"]
+data = PackedVector3Array(-2.5, 200, 2.5, 2.5, 200, 2.5, -2.5, -200, 2.5, 2.5, 200, 2.5, 2.5, -200, 2.5, -2.5, -200, 2.5, 2.5, 200, -2.5, -2.5, 200, -2.5, 2.5, -200, -2.5, -2.5, 200, -2.5, -2.5, -200, -2.5, 2.5, -200, -2.5, 2.5, 200, 2.5, 2.5, 200, -2.5, 2.5, -200, 2.5, 2.5, 200, -2.5, 2.5, -200, -2.5, 2.5, -200, 2.5, -2.5, 200, -2.5, -2.5, 200, 2.5, -2.5, -200, -2.5, -2.5, 200, 2.5, -2.5, -200, 2.5, -2.5, -200, -2.5, 2.5, 200, 2.5, -2.5, 200, 2.5, 2.5, 200, -2.5, -2.5, 200, 2.5, -2.5, 200, -2.5, 2.5, 200, -2.5, -2.5, -200, 2.5, 2.5, -200, 2.5, -2.5, -200, -2.5, 2.5, -200, 2.5, 2.5, -200, -2.5, -2.5, -200, -2.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qkrtj"]
+size = Vector3(5, 400, 5)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_5x3u5")
+sky = Color(0.423529, 0.341176, 0.698039, 1)
+sky_hor = Color(0.634134, 0.579659, 0.880283, 1)
+waves_low = Color(0.423529, 0.203922, 0.403922, 1)
+waves_high = Color(0.747408, 0.444115, 0.714623, 1)
+waves_bottom = Color(0.425204, 0.202203, 0.404083, 1)
+start_enemies = 0
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0108938, 0, -0.157413)
+
+[node name="BaseLevelPlatform" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0108938, 0, -0.157413)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseLevelPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+shape = SubResource("ConcavePolygonShape3D_0re5x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseLevelPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+material_override = ExtResource("2_wlnxt")
+mesh = SubResource("BoxMesh_qkrtj")
+skeleton = NodePath("../..")
+
+[node name="BaseLevelPlatform3" type="StaticBody3D" parent="."]
+transform = Transform3D(-2.00457e-07, 0, 2.72652, 0, 1, 0, -4.58593, 0, -1.1918e-07, 0.055335, 0, -48.2858)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseLevelPlatform3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+shape = SubResource("ConcavePolygonShape3D_0re5x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseLevelPlatform3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
+material_override = ExtResource("2_wlnxt")
+mesh = SubResource("BoxMesh_qkrtj")
+skeleton = NodePath("../..")
+
+[node name="Exit" parent="." instance=ExtResource("3_hkyhx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.01089, 0, -49.3009)
